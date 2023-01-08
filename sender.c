@@ -107,9 +107,22 @@ int main(int argc, char **argv) {
     const size_t length = strlen(PATTERN);
     size_t count = 0;
     while (true) {
-        const ssize_t written = write(fd, PATTERN, length);
-        if (written != length) {
-            fprintf(stderr, "failed or short write: %ld (%s (%d))\n", written, strerror(errno), errno);
+        size_t written = 0;
+
+        while (written < length) {
+            const ssize_t write_result = write(fd, PATTERN, length - written);
+
+            if (write_result < 0) {
+                fprintf(stderr, "failed write: %ld (%s (%d))\n", write_result, strerror(errno), errno);
+                exit(1);
+            } else {
+                written += write_result;
+            }
+        }
+
+        result = tcdrain(fd);
+        if (result != 0) {
+            fprintf(stderr, "failed to tcdrain: %s (%d)\n", strerror(errno), errno);
             exit(1);
         }
 
