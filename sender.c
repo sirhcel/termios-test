@@ -93,6 +93,14 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
+    printf("tcgetattr for checking status ...\n");
+    result = tcgetattr(fd, &config);
+    if (result < 0) {
+        fprintf(stderr, "tcgetattr failed: %s (%d)\n", strerror(errno), errno);
+        exit(1);
+    }
+    print_termios(&config);
+
     printf("about to transmit ...\n");
 
     const size_t length = strlen(PATTERN);
