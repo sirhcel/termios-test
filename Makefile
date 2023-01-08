@@ -1,2 +1,2 @@
 all:
-	clang -Os -W -o sender sender.c
+	clang -Os -W -o continuous continuous.c
