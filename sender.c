@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 
-char const * const PATTERN = "";
+char const * const PATTERN = " 0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
 
 int main(int argc, char **argv) {
