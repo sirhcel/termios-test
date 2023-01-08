@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
 
     printf("device: %s\n", argv[1]);
     printf("about to open ...\n");
-    const int fd = open(argv[1], O_RDWR | O_NOCTTY);
+    const int fd = open(argv[1], O_RDWR | O_NOCTTY | O_NONBLOCK);
     if (fd < 0) {
         fprintf(stderr, "opening %s failed: %s (%d)\n", argv[1], strerror(errno), errno);
         exit(1);
@@ -68,6 +68,7 @@ int main(int argc, char **argv) {
 
     config.c_cflag |= (CS8 | PARENB | CREAD);
     config.c_cflag |= CRTSCTS;
+    config.c_cflag |= CLOCAL;
 
     print_termios(&config);
 
