@@ -11,6 +11,21 @@
 char const * const PATTERN = " 0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 
 
+void print_termios(const struct termios *config) {
+    printf("    c_iflag: 0x%08lx\n", config->c_iflag);
+    printf("    c_oflag: 0x%08lx\n", config->c_oflag);
+    printf("    c_cflag: 0x%08lx\n", config->c_cflag);
+    printf("    c_lflag: 0x%08lx\n", config->c_lflag);
+    printf("    c_cc:");
+    for (size_t i = 0; i < NCCS; ++i) {
+        printf(" 0x%02x", config->c_cc[i]);
+    }
+    printf("\n");
+    printf("    c_ispeed: %lu\n", config->c_ispeed);
+    printf("    c_ospeed: %lu\n", config->c_ospeed);
+}
+
+
 int main(int argc, char **argv) {
     int result = -1;
 
@@ -37,8 +52,14 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
+    print_termios(&config);
+
     printf("cfmakeraw ...\n");
     cfmakeraw(&config);
+
+    print_termios(&config);
+
+    printf("configuring flags ...\n");
 
     config.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | INPCK | IGNPAR | IGNCR | ICRNL | IXON | IXOFF);
     config.c_oflag &= ~OPOST;
@@ -47,6 +68,8 @@ int main(int argc, char **argv) {
 
     config.c_cflag |= (CS8 | PARENB | CREAD);
     config.c_cflag |= CRTSCTS;
+
+    print_termios(&config);
 
     printf("cfsetispeed ...\n");
     result = cfsetispeed(&config, 115200);
@@ -60,6 +83,8 @@ int main(int argc, char **argv) {
         fprintf(stderr, "cfsetospeed failed: %s (%d)\n", strerror(errno), errno);
         exit(1);
     }
+
+    print_termios(&config);
 
     printf("tcsetattr ...\n");
     result = tcsetattr(fd, TCSANOW, &config);
