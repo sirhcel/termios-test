@@ -51,25 +51,20 @@ int main(int argc, char **argv) {
         fprintf(stderr, "tcgetattr failed: %s (%d)\n", strerror(errno), errno);
         exit(1);
     }
-
     print_termios(&config);
 
     printf("cfmakeraw ...\n");
     cfmakeraw(&config);
-
     print_termios(&config);
 
     printf("configuring flags ...\n");
-
     config.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | INPCK | IGNPAR | IGNCR | ICRNL | IXON | IXOFF);
     config.c_oflag &= ~OPOST;
     config.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
     config.c_cflag &= ~(CSIZE | PARENB | PARODD | CSTOPB | CRTSCTS);
-
     config.c_cflag |= (CS8 | PARENB | CREAD);
     config.c_cflag |= CRTSCTS;
     config.c_cflag |= CLOCAL;
-
     print_termios(&config);
 
     printf("cfsetispeed ...\n");
@@ -78,13 +73,14 @@ int main(int argc, char **argv) {
         fprintf(stderr, "cfsetispeed failed: %s (%d)\n", strerror(errno), errno);
         exit(1);
     }
+    print_termios(&config);
+
     printf("cfsetospeed ...\n");
     result = cfsetospeed(&config, 115200);
     if (result < 0) {
         fprintf(stderr, "cfsetospeed failed: %s (%d)\n", strerror(errno), errno);
         exit(1);
     }
-
     print_termios(&config);
 
     printf("tcsetattr ...\n");
@@ -93,6 +89,7 @@ int main(int argc, char **argv) {
         fprintf(stderr, "tcsetattr failed: %s (%d)\n", strerror(errno), errno);
         exit(1);
     }
+    print_termios(&config);
 
     printf("tcgetattr for checking status ...\n");
     result = tcgetattr(fd, &config);
