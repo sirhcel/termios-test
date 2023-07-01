@@ -20,7 +20,7 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation("com.google.guava:guava:31.1-jre")
-    implementation ("com.fazecast:jSerialComm:2.9.2")
+    implementation ("com.fazecast:jSerialComm:2.10.1")
 }
 
 testing {
