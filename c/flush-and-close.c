@@ -67,14 +67,14 @@ int main(int argc, char **argv) {
     config.c_cflag |= CLOCAL;
 
     printf("cfsetispeed ...\n");
-    result = cfsetispeed(&config, 9600);
+    result = cfsetispeed(&config, B9600);
     if (result < 0) {
         fprintf(stderr, "cfsetispeed failed: %s (%d)\n", strerror(errno), errno);
         exit(1);
     }
 
     printf("cfsetospeed ...\n");
-    result = cfsetospeed(&config, 9600);
+    result = cfsetospeed(&config, B9600);
     if (result < 0) {
         fprintf(stderr, "cfsetospeed failed: %s (%d)\n", strerror(errno), errno);
         exit(1);

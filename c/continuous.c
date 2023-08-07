@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
     print_termios(&config);
 
     printf("cfsetispeed ...\n");
-    result = cfsetispeed(&config, 115200);
+    result = cfsetispeed(&config, B115200);
     if (result < 0) {
         fprintf(stderr, "cfsetispeed failed: %s (%d)\n", strerror(errno), errno);
         exit(1);
@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
     print_termios(&config);
 
     printf("cfsetospeed ...\n");
-    result = cfsetospeed(&config, 115200);
+    result = cfsetospeed(&config, B115200);
     if (result < 0) {
         fprintf(stderr, "cfsetospeed failed: %s (%d)\n", strerror(errno), errno);
         exit(1);
