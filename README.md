@@ -1,3 +1,6 @@
-# Tests for hunting and demonstrating a flow control issue with termios on macOS
+# Tests for hunting and demonstrating issues with termios on macOS
 
-See https://github.com/Fazecast/jSerialComm/issues/453 for details.
+See the following issues for details:
+
+* <https://github.com/Fazecast/jSerialComm/issues/453>
+* <https://github.com/serialport/serialport-rs/issues/117>
