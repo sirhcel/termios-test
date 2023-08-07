@@ -114,7 +114,7 @@ int main(int argc, char **argv) {
         }
 
         if (count + 1 < OUTPUT_COUNT) {
-            const struct timespec duration = { .tv_sec = 0, .tv_nsec = 1000 };
+            const struct timespec duration = { .tv_sec = 0, .tv_nsec = 4000000 };
             result = nanosleep(&duration, NULL);
             if (result != 0) {
                 fprintf(stderr, "failed to nanosleep: %s (%d)\n", strerror(errno), errno);
